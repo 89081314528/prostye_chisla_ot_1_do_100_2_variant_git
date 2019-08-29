@@ -1,0 +1,1 @@
+# prostye_chisla_ot_1_do_100_2_variant_git
