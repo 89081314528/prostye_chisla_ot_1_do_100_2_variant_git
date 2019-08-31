@@ -1,4 +1,9 @@
 package com.company;
+
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.PrintStream;
+
 /**
  * метод, который возвращает массив с простыми числами от 1 до 100.
  * метод, который печатает этот массив
@@ -11,20 +16,24 @@ package com.company;
  */
 public class Main {
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws FileNotFoundException {
         printMassivProstyhChisel(10000);
-        System.out.println();
+//        PrintStream printer = System.out;
+        PrintStream printer = new PrintStream(new File("timings.csv"));
+
+//        printer.println();
 //        timeFoundProstyhChisel(1000, 200);
-        int chislo = 1000;
-        int step = 50;
-        System.out.println("Массив с временем нахождения простых чисел от 1 до " + chislo + " с шагом " + step);
-        long [] newTimeFoundProstyhChisel = timeFoundProstyhChisel(1000,50);
+        int chislo = 10_000;
+        int step = 500;
+//        printer.println("Массив с временем нахождения простых чисел от 1 до " + chislo + " с шагом " + step);
+        long [] newTimeFoundProstyhChisel = timeFoundProstyhChisel(10_000,500);
+        printer.println("число" + ";" + "время");
         for (int i = 0; i < newTimeFoundProstyhChisel.length; i ++) {
-            System.out.print(newTimeFoundProstyhChisel[i] + " ");
+            printer.println(( i * step) + 2 + ";" + newTimeFoundProstyhChisel[i] + " ");
         }
-        System.out.println();
-        }
-        public static long[] timeFoundProstyhChisel (int chislo, int step) {
+        printer.println();
+    }
+    public static long[] timeFoundProstyhChisel (int chislo, int step) {
         int count = 0;
         long[] massivTime = new long[chislo];
         for (int i = 0; i < massivTime.length; i++) {
@@ -38,17 +47,18 @@ public class Main {
             massivTime[i] = timeFinish - timeStart;
             count = count + 1;
         }
-            long[] newMassiveTime = new long[count];
-            int b = 0;
-            for (int i = 0; i < chislo; i++) {
-                if (massivTime[i] != -1) {
-                    newMassiveTime[b] = massivTime[i];
-                    b = b + 1;
-                }
+        long[] newMassiveTime = new long[count];
+        int b = 0;
+        for (int i = 0; i < chislo; i++) {
+            if (massivTime[i] != -1) {
+                newMassiveTime[b] = massivTime[i];
+                b = b + 1;
             }
+        }
 
         return newMassiveTime;
-        }
+    }
+
     public static void printMassivProstyhChisel(int chislo) {
         int [] a = massivProstyhChisel(chislo);
         for (int i = 0; i < a.length; i++) {
