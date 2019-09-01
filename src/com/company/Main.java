@@ -13,6 +13,13 @@ import java.io.PrintStream;
  * вынести это в метод (метод, который возвращает массив с временами) и распечатать в мэйне.
  * сохранять шаги в гите.
  * придумать задачу с десятью простыми шагами и соxранить каждый шаг в гит.
+ * 01/09 объединить метод эратосфена и метод brut force в одном проекте, выгрузить их в эксель и построить два графика.
+ * паспортный стол - заполнить эксель паспортными данными сотрудников (фио, серия, номер).
+ * сначала сделать по аналогии с PrimeTime для одного человека, потом сделать массив
+ * добавить настройки, какие колонки нужно добавлять в csv. сначала написать метод, который принимает массив строк и строку.
+ * если в массиве есть эта строка, то он возвращает тру, если нет, то фолс.
+ * метод, который принимает массив служащих, имя файла (строка с названием файла, например emploee.csv) и целое число, и печатает
+ * файл служащих, у которых зарплата выше этой цифры
  */
 public class Main {
 
@@ -20,7 +27,6 @@ public class Main {
         printMassivProstyhChisel(10000);
 //        PrintStream printer = System.out;
         PrintStream printer = new PrintStream(new File("timings.csv"));
-
 //        printer.println();
 //        timeFoundProstyhChisel(1000, 200);
         int chislo = 10_000;
@@ -29,10 +35,25 @@ public class Main {
         long [] newTimeFoundProstyhChisel = timeFoundProstyhChisel(10_000,500);
         printer.println("число" + ";" + "время");
         for (int i = 0; i < newTimeFoundProstyhChisel.length; i ++) {
-            printer.println(( i * step) + 2 + ";" + newTimeFoundProstyhChisel[i] + " ");
+//            printer.println(( i * step) + 2 + ";" + newTimeFoundProstyhChisel[i] + " ");
+//            writeLine(( i * step) + 2, newTimeFoundProstyhChisel[i], printer);
+//            PrimeTime timeFound = new PrimeTime();
+            PrimeTime timeFound = new PrimeTime(( i * step) + 2, newTimeFoundProstyhChisel[i]);
+//            timeFound.number = ( i * step) + 2;
+//            timeFound.time = newTimeFoundProstyhChisel[i];
+            writeLine(timeFound, printer);
         }
         printer.println();
     }
+    public static void writeLine (PrimeTime timeFound, PrintStream printer) {
+       printer.println(timeFound.number + ";" + timeFound.time);
+    }
+
+    public static void writeLine (int time, long chislo, PrintStream printer)
+    {
+        printer.println(time + ";" + chislo);
+    }
+
     public static long[] timeFoundProstyhChisel (int chislo, int step) {
         int count = 0;
         long[] massivTime = new long[chislo];
